@@ -3,14 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Digit recognition</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-  <form method="POST" action="/upload/"  enctype="multipart/form-data">
-    <label>
-      Select file:<br>
-      <input type="file" name="file">
-    </label><br>
-    <input type="submit" value="Recognize">
-  </form>
+  <canvas id="canvas" width="200" height="200"></canvas>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

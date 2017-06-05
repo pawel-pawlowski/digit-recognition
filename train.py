@@ -88,8 +88,8 @@ def train_model(model_path=MODEL_PATH):
     print('Performing grid search')
     best_estimator = perform_grid_search(x_train, y_train)
 
-    print('Saving model to: {}'.format(model_path))
     # save best estimator to model file
+    print('Saving model to: {}'.format(model_path))
     joblib.dump(best_estimator, model_path)
 
     # check test set accuracy score
