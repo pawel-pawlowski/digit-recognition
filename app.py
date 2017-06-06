@@ -1,7 +1,10 @@
-import os
+import io
 import base64
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, jsonify
+
+from recognition import recognize
+
 
 app = Flask(__name__)
 
@@ -23,11 +26,14 @@ def file_upload():
     # decode image content
     content = base64.b64decode(encoded_image)
 
-    # TODO: recognize digit send response back
-    with open('test.png', 'wb') as f:
-        f.write(content)
+    # create file buffer
+    tmp_file = io.BytesIO(content)
 
-    return 'ok'
+    # send image to recognition
+    recognition_results = recognize(tmp_file)
+
+    # return JSON response
+    return jsonify(recognition_results)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,7 +1,7 @@
 'use strict';
 
 document.addEventListener("DOMContentLoaded", function(){
-    var canvas, ctx, px=0, py=0, mx=0, my=0, drawing=false, drawingTimeout;
+    var canvas, ctx, px=0, py=0, mx=0, my=0, drawing=false, drawingTimeout, isEmpty=true;
 
     // retrieve canvas and its drawing context
     canvas = document.getElementById("canvas");
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function(){
     ctx.lineWidth = 5;
     ctx.fillStyle = "black";
     ctx.lineCap = "round";
+    clear();
 
     // setup event listeners
     canvas.addEventListener("mousemove", onMouseMove, false);
@@ -45,11 +46,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
         // draw line from prev position to current
         if (drawing){
+            isEmpty = false;
             drawLine(ctx, px, py, mx, my);
         }
     }
 
     function drawLine(ctx, ax, ay, bx, by){
+      ctx.fillStyle = "black";
       ctx.beginPath();
       ctx.moveTo(ax, ay);
       ctx.lineTo(bx, by);
@@ -58,7 +61,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
     function clear(){
         // clear canvas after sending digit
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        isEmpty = true;
     }
 
     function drawingStarted() {
@@ -69,8 +74,11 @@ document.addEventListener("DOMContentLoaded", function(){
     function drawingFinished(){
         clearTimeout(drawingTimeout);
         drawingTimeout = setTimeout(function(){
-            sendImage();
-            clear();
+            // checks if user draw anything on screen to prevent sending empty image
+            if (!isEmpty){
+                sendImage();
+                clear();
+            }
         }, 1000);
     }
 
