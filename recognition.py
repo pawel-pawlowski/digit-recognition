@@ -1,6 +1,23 @@
+import numpy as np
 from PIL import Image, ImageOps
 from scipy.ndimage.measurements import center_of_mass
-import numpy as np
+from sklearn.externals import joblib
+
+from train import MODEL_PATH
+
+
+def load_model(model_path=MODEL_PATH):
+    """
+    Loads model from file
+    :param model_path: path to model file
+    :return: loaded model
+    """
+    print("Loading model")
+    return joblib.load(model_path)
+
+# store model globally in module
+# TODO: check if that's ok
+model = load_model()
 
 
 def preprocess_image(input_file):
@@ -42,7 +59,11 @@ def recognize(input_file):
     """Perform input image preprocessing and recognition
 
     :param input_file: file-like object containing input image
-    :return: recognition results
+    :return: recognition results as JSON
     """
-    img = preprocess_image(input_file)
-    return {'status': 'ok'}
+    sample = preprocess_image(input_file)
+    value = model.predict(sample)
+    return {
+        'status': 'ok',
+        'value': value[0],
+    }
