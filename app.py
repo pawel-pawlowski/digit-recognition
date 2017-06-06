@@ -36,4 +36,4 @@ def file_upload():
     return jsonify(recognition_results)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
