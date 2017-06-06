@@ -1,11 +1,14 @@
 'use strict';
 
 document.addEventListener("DOMContentLoaded", function(){
-    var canvas, ctx, px=0, py=0, mx=0, my=0, drawing=false, drawingTimeout, isEmpty=true;
+    var canvas, ctx, px=0, py=0, mx=0, my=0, drawing=false, drawingTimeout, isEmpty=true, results;
 
     // retrieve canvas and its drawing context
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
+
+    // get result element
+    results = document.getElementById("results");
 
     // setup drawing params
     ctx.lineWidth = 5;
@@ -17,23 +20,19 @@ document.addEventListener("DOMContentLoaded", function(){
     canvas.addEventListener("mousemove", onMouseMove, false);
     canvas.addEventListener("mouseup", onMouseUp, false);
     canvas.addEventListener("mousedown", onMouseDown, false);
-    canvas.addEventListener("mouseout", onMouseOut, false);
+    canvas.addEventListener("mouseout", onMouseUp, false);
 
     function onMouseDown(){
         drawing = true;
         drawingStarted();
+        results.innerHTML = 'Drawing';
     }
 
     function onMouseUp(){
         drawing = false;
         drawingFinished();
+        results.innerHTML = 'Drawing finished';
     }
-
-    function onMouseOut(){
-        drawing = false;
-        drawingFinished();
-    }
-
 
     function onMouseMove(e){
         // save old position
@@ -76,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function(){
         drawingTimeout = setTimeout(function(){
             // checks if user draw anything on screen to prevent sending empty image
             if (!isEmpty){
+                results.innerHTML = 'Recognizing';
                 sendImage();
                 clear();
             }
@@ -91,11 +91,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
         xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
-            // TODO: handle response and error properly
             if (xhr.status === 200) {
-              console.log(xhr.responseText);
+              var data = JSON.parse(xhr.responseText);
+              results.innerHTML = 'Recognized value: ' + data.value;
             } else {
-              console.log('Error: ' + xhr.status);
+              results.innerHTML = 'Error: ' + xhr.status
             }
           }
         }
