@@ -5,6 +5,7 @@ is sent to [Flask](http://flask.pocoo.org/)-powered backend. Image is transforme
 [Pillow](https://pypi.python.org/pypi/Pillow/). Then model created with [scikit-learn](http://scikit-learn.org/stable/)
  trained on [MNIST database](http://yann.lecun.com/exdb/mnist/) is used to provide final prediction.
  
+![](static/screen.png)
 ## Setup
 
 1. Download repository
