@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import numpy as np
 from PIL import Image, ImageOps
 from scipy.ndimage.measurements import center_of_mass
@@ -16,7 +18,6 @@ def load_model(model_path=MODEL_PATH):
     return joblib.load(model_path)
 
 # store model globally in module
-# TODO: check if that's ok
 model = load_model()
 
 

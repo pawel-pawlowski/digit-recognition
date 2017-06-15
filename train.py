@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import numpy as np
 from sklearn.datasets import fetch_mldata
 from sklearn.decomposition import PCA
