@@ -9,13 +9,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.externals import joblib
 from sklearn.metrics import accuracy_score
 
-
-MODEL_PATH = 'model.pkl'
-
-# train params
-CV_FOLDS = 5
-KNN_N_CHOICES = range(4, 9)
-PCA_N_CHOICES = range(40, 85, 5)
+import config
 
 
 def fetch_data():
@@ -63,20 +57,20 @@ def perform_grid_search(x_train, y_train):
 
     # create dict containing possible hyperparams values
     param_grid = {
-        'pca__n_components': PCA_N_CHOICES,
-        'knn__n_neighbors': KNN_N_CHOICES,
+        'pca__n_components': config.PCA_N_CHOICES,
+        'knn__n_neighbors': config.KNN_N_CHOICES,
         'knn__weights': ('uniform', 'distance')
     }
 
     # perform actual grid search
-    grid_search = GridSearchCV(pipeline, param_grid, cv=CV_FOLDS, scoring='accuracy', verbose=10, n_jobs=-1)
+    grid_search = GridSearchCV(pipeline, param_grid, cv=config.CV_FOLDS, scoring='accuracy', verbose=10, n_jobs=-1)
     grid_search.fit(x_train, y_train)
 
     # return pipeline with best params
     return grid_search.best_estimator_
 
 
-def train_model(model_path=MODEL_PATH):
+def train_model(model_path=config.MODEL_PATH):
     """
     Train model with optimal params and save it on disk
 

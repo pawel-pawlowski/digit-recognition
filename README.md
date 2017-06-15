@@ -46,6 +46,5 @@ Then copy `model.pkl` to project folder and run web app.
 
 ## Future work
 
-* Extraction of configuration params (model path, training hyperparams etc.)
 * Improving model accuracy
 * Provide additional features using OpenCV

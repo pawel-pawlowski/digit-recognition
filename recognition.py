@@ -4,8 +4,7 @@ import numpy as np
 from PIL import Image, ImageOps
 from scipy.ndimage.measurements import center_of_mass
 from sklearn.externals import joblib
-
-from train import MODEL_PATH
+from config import MODEL_PATH
 
 
 def load_model(model_path=MODEL_PATH):

@@ -36,4 +36,5 @@ def file_upload():
     return jsonify(recognition_results)
 
 if __name__ == '__main__':
+    app.config.from_pyfile('config.py')
     app.run()
