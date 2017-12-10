@@ -3,6 +3,7 @@ import base64
 
 from flask import Flask, render_template, request, jsonify
 
+from train import ImageDeskewApplier # XXX unpickling
 from recognition import recognize
 
 

@@ -4,7 +4,9 @@ import numpy as np
 from PIL import Image, ImageOps
 from scipy.ndimage.measurements import center_of_mass
 from sklearn.externals import joblib
+
 from config import MODEL_PATH
+from train import ImageDeskewApplier # XXX: unpickling
 
 
 def load_model(model_path=MODEL_PATH):
@@ -62,7 +64,7 @@ def recognize(input_file):
     :return: recognition results as JSON
     """
     sample = preprocess_image(input_file)
-    value = model.predict(sample)
+    value = model.predict([sample])
     return {
         'status': 'ok',
         'value': value[0],
